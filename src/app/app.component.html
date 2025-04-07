@@ -1,1 +1,74 @@
-<router-outlet />
+<mat-sidenav-container class="sidenav-container">
+  <!-- Sidenav for mobile -->
+  <mat-sidenav #drawer class="sidenav"
+              [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+              [mode]="(isHandset$ | async) ? 'over' : 'side'"
+              [opened]="false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <mat-list-item [routerLink]="'/dashboard'" routerLinkActive="active-link" (click)="drawer.close()">
+        <mat-icon>dashboard</mat-icon>
+        <span class="nav-link-text">Dashboard</span>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="'/sales'" routerLinkActive="active-link" (click)="drawer.close()">
+        <mat-icon>point_of_sale</mat-icon>
+        <span class="nav-link-text">Sales</span>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="'/customers'" routerLinkActive="active-link" (click)="drawer.close()">
+        <mat-icon>people</mat-icon>
+        <span class="nav-link-text">Customers</span>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="'/settings'" (click)="drawer.close()">
+        <mat-icon>settings</mat-icon>
+        <span class="nav-link-text">Settings</span>
+      </mat-list-item>
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <!-- Toolbar -->
+    <mat-toolbar color="primary">
+      <!-- Mobile menu button -->
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+
+      <span>My App</span>
+
+      <!-- Desktop navigation links -->
+      <span class="toolbar-spacer"></span>
+      <div class="desktop-links" *ngIf="!(isHandset$ | async)">
+        <a mat-button routerLink="/dashboard" routerLinkActive="active-link">
+          <mat-icon>dashboard</mat-icon>
+          Dashboard
+        </a>
+        <a mat-button routerLink="/sales" routerLinkActive="active-link">
+          <mat-icon>point_of_sale</mat-icon>
+          Sales
+        </a>
+        <a mat-button routerLink="/customers" routerLinkActive="active-link">
+          <mat-icon>people</mat-icon>
+          Customers
+        </a>
+        <a mat-button routerLink="/settings" routerLinkActive="active-link">
+          <mat-icon>settings</mat-icon>
+          Settings
+        </a>
+      </div>
+    </mat-toolbar>
+
+    <!-- Main content -->
+    <div class="content-container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
